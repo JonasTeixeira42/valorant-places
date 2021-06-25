@@ -1,13 +1,9 @@
-import Head from 'next/head';
+import Main from 'components/Main';
 
-export default function Home({ title = 'React Avançado' }) {
+export default function Home() {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <h1>{title}</h1>
+      <Main />
     </>
   );
 }
