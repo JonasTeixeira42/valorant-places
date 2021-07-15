@@ -1,5 +1,8 @@
 import Head from 'next/head';
 import NextNprogress from 'nextjs-progressbar';
+import SEO from '../../next-seo.config';
+import { DefaultSeo } from 'next-seo';
+
 import type { AppProps } from 'next/app';
 
 import GlobalStyles from 'styles/global';
@@ -19,11 +22,8 @@ function App({ Component, pageProps }: AppProps) {
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossOrigin=""
         />
-        <meta
-          name="description"
-          content="A simple project to show every place a street fighter's character came from"
-        />
       </Head>
+      <DefaultSeo {...SEO} />
       <GlobalStyles />
       <NextNprogress
         color="#ff4654"

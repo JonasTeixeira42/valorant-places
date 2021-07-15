@@ -1,6 +1,7 @@
-import { useRouter } from 'next/dist/client/router';
-import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
 import Image from 'next/image';
+import { useRouter } from 'next/dist/client/router';
+import { NextSeo } from 'next-seo';
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
 
 import LinkWrapper from 'components/LinkWrapper';
 
@@ -8,8 +9,8 @@ import * as S from './styles';
 
 type ImageProps = {
   url: string;
-  height: string;
-  width: string;
+  height: number;
+  width: number;
 };
 
 export type PlaceTemplateProps = {
@@ -18,6 +19,7 @@ export type PlaceTemplateProps = {
     name: string;
     description?: {
       html: string;
+      text: string;
     };
     gallery: ImageProps[];
   };
@@ -30,6 +32,29 @@ export default function PlaceTemplate({ place }: PlaceTemplateProps) {
 
   return (
     <>
+      <NextSeo
+        title={`${place.name} - Valorant Places`}
+        description={
+          place.description?.text ||
+          "a website to talk about the places that valorant's characters came from"
+        }
+        canonical="https://valorant-place.jonasteixeira.com.br"
+        openGraph={{
+          url: 'https://valorant-place.jonasteixeira.com.br',
+          title: 'Valorant Places',
+          description:
+            place.description?.text ||
+            "a website to talk about the places that valorant's characters came from",
+          images: [
+            {
+              url: place.gallery[0].url,
+              width: place.gallery[0].width,
+              height: place.gallery[0].height,
+              alt: `${place.name}`
+            }
+          ]
+        }}
+      />
       <LinkWrapper href="/">
         <CloseOutline size={32} aria-label="Go back to map" />
       </LinkWrapper>
