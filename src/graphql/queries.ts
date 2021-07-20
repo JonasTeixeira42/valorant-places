@@ -27,14 +27,18 @@ export const GET_PAGE_BY_SLUG = gql`
 `;
 
 export const GET_PLACES = gql`
-  query getPlaces($first: Int) {
-    places(first: $first) {
+  query getPlaces {
+    places {
       id
       slug
       name
+      line
       location {
         latitude
         longitude
+      }
+      avatar {
+        url
       }
       description {
         html

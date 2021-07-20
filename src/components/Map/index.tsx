@@ -1,10 +1,19 @@
 import { useRouter } from 'next/dist/client/router';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, MapConsumer } from 'react-leaflet';
+import L from 'leaflet';
+import ReactDOMServer from 'react-dom/server';
+
+import CustomMarker from 'components/CustomMarker';
+
+import * as S from './styles';
 
 type Place = {
   id: string;
   name: string;
   slug: string;
+  avatar: {
+    url: string;
+  };
   location: {
     latitude: number;
     longitude: number;
@@ -37,29 +46,59 @@ const Map = ({ places }: MapProps) => {
   const router = useRouter();
 
   return (
-    <MapContainer
-      center={[0, 0]}
-      zoom={3}
-      style={{ height: '100%', width: '100%' }}
-    >
-      <CustomTileLayer />
-      {places?.map(({ id, slug, name, location }) => {
-        const { latitude, longitude } = location;
+    <S.MapWrapper>
+      <MapContainer
+        center={[0, 0]}
+        zoom={3}
+        minZoom={3}
+        maxBounds={[
+          [-180, 180],
+          [180, -180]
+        ]}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <MapConsumer>
+          {(map) => {
+            const width =
+              window.innerWidth ||
+              document.documentElement.clientWidth ||
+              document.body.clientWidth;
 
-        return (
-          <Marker
-            key={`place-${id}`}
-            position={[latitude, longitude]}
-            title={name}
-            eventHandlers={{
-              click: () => {
-                router.push(`/place/${slug}`);
-              }
-            }}
-          />
-        );
-      })}
-    </MapContainer>
+            if (width < 768) {
+              map.setMinZoom(2);
+            }
+
+            return null;
+          }}
+        </MapConsumer>
+        <CustomTileLayer />
+        {places?.map(({ id, slug, name, location, avatar }) => {
+          const { latitude, longitude } = location;
+
+          const icon = L.divIcon({
+            className: 'custom-icon',
+            iconAnchor: [20, 40],
+            html: ReactDOMServer.renderToString(
+              <CustomMarker avatar={avatar.url} />
+            )
+          });
+
+          return (
+            <Marker
+              icon={icon}
+              key={`place-${id}`}
+              position={[latitude, longitude]}
+              title={name}
+              eventHandlers={{
+                click: () => {
+                  router.push(`/place/${slug}`);
+                }
+              }}
+            />
+          );
+        })}
+      </MapContainer>
+    </S.MapWrapper>
   );
 };
 
