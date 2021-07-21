@@ -17,6 +17,7 @@ export type PlaceTemplateProps = {
   place: {
     slug: string;
     name: string;
+    line: string;
     description?: {
       html: string;
       text: string;
@@ -60,14 +61,6 @@ export default function PlaceTemplate({ place }: PlaceTemplateProps) {
       </LinkWrapper>
       <S.Wrapper>
         <S.Container>
-          <S.Heading>{place.name}</S.Heading>
-
-          <S.Body
-            dangerouslySetInnerHTML={{
-              __html: place.description?.html || 'null'
-            }}
-          />
-
           <S.Gallery>
             {place.gallery.map((image, index) => (
               <Image
@@ -81,6 +74,15 @@ export default function PlaceTemplate({ place }: PlaceTemplateProps) {
               />
             ))}
           </S.Gallery>
+
+          <S.Heading>{place.name}</S.Heading>
+          <S.Quotation>{place.line}</S.Quotation>
+
+          <S.Body
+            dangerouslySetInnerHTML={{
+              __html: place.description?.html || 'null'
+            }}
+          />
         </S.Container>
       </S.Wrapper>
     </>

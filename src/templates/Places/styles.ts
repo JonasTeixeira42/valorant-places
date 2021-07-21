@@ -11,13 +11,41 @@ export const Container = styled.section`
 
 export const Heading = styled.h1`
   font-size: var(--large);
-  margin-bottom: var(--medium);
+  margin-top: var(--large);
+`;
+
+export const Quotation = styled.q`
+  display: block;
+  font-size: var(--medium);
+  margin-bottom: var(--large);
 `;
 
 export const Body = styled.div`
   margin-bottom: var(--large);
+
   p {
     margin-bottom: var(--medium);
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    background-color: #081017;
+    padding: 2rem 1.5rem 1rem;
+    margin-bottom: 5rem;
+  }
+
+  h2 {
+    font-size: var(--medium);
+    margin-bottom: var(--medium);
+  }
+
+  h3 {
+    font-size: 2rem;
+    color: var(--highlight);
+    margin-bottom: var(--small);
   }
 `;
 
