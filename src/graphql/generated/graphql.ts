@@ -3023,7 +3023,7 @@ export type GetPlacesBySlugQuery = (
   { __typename?: 'Query' }
   & { place?: Maybe<(
     { __typename?: 'Place' }
-    & Pick<Place, 'id' | 'slug' | 'name'>
+    & Pick<Place, 'id' | 'slug' | 'name' | 'line'>
     & { location: (
       { __typename?: 'Location' }
       & Pick<Location, 'latitude' | 'longitude'>

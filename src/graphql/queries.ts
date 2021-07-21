@@ -57,6 +57,7 @@ export const GET_PLACE_BY_SLUG = gql`
       id
       slug
       name
+      line
       location {
         latitude
         longitude
