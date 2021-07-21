@@ -72,6 +72,7 @@ export type Asset = Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   galleryPlace: Array<Place>;
+  avatarPlace: Array<Place>;
   /** List of Asset versions */
   history: Array<Version>;
   /** Get the url for the asset with provided transformations applied. */
@@ -144,6 +145,19 @@ export type AssetGalleryPlaceArgs = {
 
 
 /** Asset system model */
+export type AssetAvatarPlaceArgs = {
+  where?: Maybe<PlaceWhereInput>;
+  orderBy?: Maybe<PlaceOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** Asset system model */
 export type AssetHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
@@ -183,6 +197,7 @@ export type AssetCreateInput = {
   size?: Maybe<Scalars['Float']>;
   mimeType?: Maybe<Scalars['String']>;
   galleryPlace?: Maybe<PlaceCreateManyInlineInput>;
+  avatarPlace?: Maybe<PlaceCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: Maybe<AssetCreateLocalizationsInput>;
 };
@@ -312,6 +327,9 @@ export type AssetManyWhereInput = {
   galleryPlace_every?: Maybe<PlaceWhereInput>;
   galleryPlace_some?: Maybe<PlaceWhereInput>;
   galleryPlace_none?: Maybe<PlaceWhereInput>;
+  avatarPlace_every?: Maybe<PlaceWhereInput>;
+  avatarPlace_some?: Maybe<PlaceWhereInput>;
+  avatarPlace_none?: Maybe<PlaceWhereInput>;
 };
 
 export enum AssetOrderByInput {
@@ -353,6 +371,7 @@ export type AssetUpdateInput = {
   size?: Maybe<Scalars['Float']>;
   mimeType?: Maybe<Scalars['String']>;
   galleryPlace?: Maybe<PlaceUpdateManyInlineInput>;
+  avatarPlace?: Maybe<PlaceUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: Maybe<AssetUpdateLocalizationsInput>;
 };
@@ -657,6 +676,9 @@ export type AssetWhereInput = {
   galleryPlace_every?: Maybe<PlaceWhereInput>;
   galleryPlace_some?: Maybe<PlaceWhereInput>;
   galleryPlace_none?: Maybe<PlaceWhereInput>;
+  avatarPlace_every?: Maybe<PlaceWhereInput>;
+  avatarPlace_some?: Maybe<PlaceWhereInput>;
+  avatarPlace_none?: Maybe<PlaceWhereInput>;
 };
 
 /** References Asset record uniquely */
@@ -1723,6 +1745,7 @@ export type Place = Node & {
   stage: Stage;
   /** Get the document in other stages */
   documentInStages: Array<Place>;
+  line: Scalars['String'];
   /** The unique identifier */
   id: Scalars['ID'];
   /** The time the document was created */
@@ -1742,6 +1765,7 @@ export type Place = Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   gallery: Array<Asset>;
+  avatar: Asset;
   /** List of Place versions */
   history: Array<Version>;
 };
@@ -1781,6 +1805,11 @@ export type PlaceGalleryArgs = {
 };
 
 
+export type PlaceAvatarArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
 export type PlaceHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
@@ -1805,6 +1834,7 @@ export type PlaceConnection = {
 };
 
 export type PlaceCreateInput = {
+  line: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
@@ -1812,6 +1842,7 @@ export type PlaceCreateInput = {
   description?: Maybe<Scalars['RichTextAST']>;
   slug: Scalars['String'];
   gallery: AssetCreateManyInlineInput;
+  avatar: AssetCreateOneInlineInput;
 };
 
 export type PlaceCreateManyInlineInput = {
@@ -1847,6 +1878,25 @@ export type PlaceManyWhereInput = {
   OR?: Maybe<Array<PlaceWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
   NOT?: Maybe<Array<PlaceWhereInput>>;
+  line?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  line_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  line_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  line_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  line_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  line_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  line_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  line_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  line_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  line_not_ends_with?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   /** All values that are not equal to given value. */
   id_not?: Maybe<Scalars['ID']>;
@@ -1955,9 +2005,12 @@ export type PlaceManyWhereInput = {
   gallery_every?: Maybe<AssetWhereInput>;
   gallery_some?: Maybe<AssetWhereInput>;
   gallery_none?: Maybe<AssetWhereInput>;
+  avatar?: Maybe<AssetWhereInput>;
 };
 
 export enum PlaceOrderByInput {
+  LineAsc = 'line_ASC',
+  LineDesc = 'line_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   CreatedAtAsc = 'createdAt_ASC',
@@ -1973,11 +2026,13 @@ export enum PlaceOrderByInput {
 }
 
 export type PlaceUpdateInput = {
+  line?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   location?: Maybe<LocationInput>;
   description?: Maybe<Scalars['RichTextAST']>;
   slug?: Maybe<Scalars['String']>;
   gallery?: Maybe<AssetUpdateManyInlineInput>;
+  avatar?: Maybe<AssetUpdateOneInlineInput>;
 };
 
 export type PlaceUpdateManyInlineInput = {
@@ -1998,6 +2053,7 @@ export type PlaceUpdateManyInlineInput = {
 };
 
 export type PlaceUpdateManyInput = {
+  line?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['RichTextAST']>;
 };
@@ -2055,6 +2111,25 @@ export type PlaceWhereInput = {
   OR?: Maybe<Array<PlaceWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
   NOT?: Maybe<Array<PlaceWhereInput>>;
+  line?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  line_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  line_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  line_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  line_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  line_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  line_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  line_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  line_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  line_not_ends_with?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   /** All values that are not equal to given value. */
   id_not?: Maybe<Scalars['ID']>;
@@ -2163,6 +2238,7 @@ export type PlaceWhereInput = {
   gallery_every?: Maybe<AssetWhereInput>;
   gallery_some?: Maybe<AssetWhereInput>;
   gallery_none?: Maybe<AssetWhereInput>;
+  avatar?: Maybe<AssetWhereInput>;
 };
 
 /** References Place record uniquely */
@@ -2455,6 +2531,13 @@ export type UserDocumentInStagesArgs = {
   inheritLocale?: Scalars['Boolean'];
 };
 
+export type UserConnectInput = {
+  /** Document to connect */
+  where: UserWhereUniqueInput;
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: Maybe<ConnectPositionInput>;
+};
+
 /** A connection to a list of items. */
 export type UserConnection = {
   __typename?: 'UserConnection';
@@ -2463,6 +2546,16 @@ export type UserConnection = {
   /** A list of edges. */
   edges: Array<UserEdge>;
   aggregate: Aggregate;
+};
+
+export type UserCreateManyInlineInput = {
+  /** Connect multiple existing User documents */
+  connect?: Maybe<Array<UserWhereUniqueInput>>;
+};
+
+export type UserCreateOneInlineInput = {
+  /** Connect one existing User document */
+  connect?: Maybe<UserWhereUniqueInput>;
 };
 
 /** An edge in a connection. */
@@ -2624,6 +2717,22 @@ export enum UserOrderByInput {
   KindAsc = 'kind_ASC',
   KindDesc = 'kind_DESC'
 }
+
+export type UserUpdateManyInlineInput = {
+  /** Connect multiple existing User documents */
+  connect?: Maybe<Array<UserConnectInput>>;
+  /** Override currently-connected documents with multiple existing User documents */
+  set?: Maybe<Array<UserWhereUniqueInput>>;
+  /** Disconnect multiple User documents */
+  disconnect?: Maybe<Array<UserWhereUniqueInput>>;
+};
+
+export type UserUpdateOneInlineInput = {
+  /** Connect existing User document */
+  connect?: Maybe<UserWhereUniqueInput>;
+  /** Disconnect currently connected User document */
+  disconnect?: Maybe<Scalars['Boolean']>;
+};
 
 /** Identifies documents */
 export type UserWhereInput = {
@@ -2892,6 +3001,9 @@ export type GetPlacesQuery = (
     & { location: (
       { __typename?: 'Location' }
       & Pick<Location, 'latitude' | 'longitude'>
+    ), avatar: (
+      { __typename?: 'Asset' }
+      & Pick<Asset, 'url'>
     ), description?: Maybe<(
       { __typename?: 'RichText' }
       & Pick<RichText, 'html'>
@@ -2917,7 +3029,7 @@ export type GetPlacesBySlugQuery = (
       & Pick<Location, 'latitude' | 'longitude'>
     ), description?: Maybe<(
       { __typename?: 'RichText' }
-      & Pick<RichText, 'html'>
+      & Pick<RichText, 'html' | 'text'>
     )>, gallery: Array<(
       { __typename?: 'Asset' }
       & Pick<Asset, 'url' | 'height' | 'width'>
