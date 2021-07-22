@@ -12,12 +12,20 @@ export const Container = styled.section`
 export const Heading = styled.h1`
   font-size: var(--large);
   margin-top: var(--large);
+
+  @media (max-width: 76.8rem) {
+    font-size: 2.8rem;
+  }
 `;
 
 export const Quotation = styled.q`
   display: block;
   font-size: var(--medium);
   margin-bottom: var(--large);
+
+  @media (max-width: 76.8rem) {
+    font-size: 2rem;
+  }
 `;
 
 export const Body = styled.div`
@@ -40,12 +48,20 @@ export const Body = styled.div`
   h2 {
     font-size: var(--medium);
     margin-bottom: var(--medium);
+
+    @media (max-width: 76.8rem) {
+      font-size: 2.2rem;
+    }
   }
 
   h3 {
     font-size: 2rem;
     color: var(--highlight);
     margin-bottom: var(--small);
+
+    @media (max-width: 76.8rem) {
+      font-size: 1.8rem;
+    }
   }
 `;
 

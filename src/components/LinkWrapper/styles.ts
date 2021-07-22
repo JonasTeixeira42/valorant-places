@@ -8,6 +8,11 @@ export const Wrapper = styled.div`
   color: var(--white);
   cursor: pointer;
 
+  @media (max-width: 76.8rem) {
+    top: var(--small);
+    right: var(--small);
+  }
+
   svg {
     transition: color 0.3s ease-in-out;
   }
