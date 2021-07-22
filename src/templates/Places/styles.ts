@@ -2,6 +2,18 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: var(--large) var(--medium);
+  animation: transformAnimation 0.8s forwards;
+
+  @keyframes transformAnimation {
+    from {
+      opacity: 0;
+      transform: translateX(-3rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 `;
 
 export const Container = styled.section`
