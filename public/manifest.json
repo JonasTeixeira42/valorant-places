@@ -1,6 +1,6 @@
 {
-  "name": "Street Fighters",
-  "short_name": "Street Fighters",
+  "name": "Valorant Places",
+  "short_name": "Valorant Places",
   "icons": [
     {
       "src": "/img/icon-192.png",
@@ -13,9 +13,9 @@
       "sizes": "512x512"
     }
   ],
-  "background_color": "#06092B",
-  "description": "A simple project to show every place a street fighter's character came from",
+  "background_color": "#101822",
+  "description": "A simple project to show every place a valorant's character came from",
   "display": "fullscreen",
   "start_url": "/",
-  "theme_color": "#06092B"
+  "theme_color": "#101822"
 }
