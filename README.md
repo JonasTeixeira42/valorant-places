@@ -1,4 +1,4 @@
-# Note App
+# Valorant Places
 
 Esse é um projeto front-end feito com Next.js de uma aplicação que é um mapa interativo. Nesse mapa, mostra os países de origem de cada personagem do jogo Valorant, assim como as habilidades de cada um.
 
