@@ -33,4 +33,4 @@ Abrir [http://localhost:3000](http://localhost:3000) no seu navegador para ver o
 - `lint`: rodar o linter no projeto
 - `test`: roda o jest para testar todos os componentes
 - `test:watch`: roda o jest em watch mode
-- `codegen`: gera a tipagem de todas as queries feitas com GraphQL
+- `codegen`: gera a tipagem de todas as queries feitas com GraphQL 
